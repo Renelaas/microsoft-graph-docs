@@ -30,7 +30,7 @@ One of the following permissions is required to call this API. To learn more, in
 }
 -->
 ``` http
-GET /deviceManagement/deviceCompliancePolicies/{deviceCompliancePolicyId}/scheduledActionsForRule/{deviceComplianceScheduledActionForRuleId}
+GET /deviceManagement/deviceCompliancePolicies/{deviceCompliancePolicyId}?$expand=scheduledActionsForRule($expand=scheduledActionConfigurations)
 ```
 
 ## Optional query parameters
@@ -53,7 +53,7 @@ If successful, this method returns a `200 OK` response code and [deviceComplianc
 ### Request
 Here is an example of the request.
 ``` http
-GET https://graph.microsoft.com/v1.0/deviceManagement/deviceCompliancePolicies/{deviceCompliancePolicyId}/scheduledActionsForRule/{deviceComplianceScheduledActionForRuleId}
+GET https://graph.microsoft.com/1.0/deviceManagement/deviceCompliancePolicies/{deviceCompliancePolicyId}?$expand=scheduledActionsForRule($expand=scheduledActionConfigurations)
 ```
 
 ### Response
@@ -62,13 +62,51 @@ Here is an example of the response. Note: The response object shown here may be 
 HTTP/1.1 200 OK
 Content-Type: application/json
 Content-Length: 188
-
 {
-  "value": {
-    "@odata.type": "#microsoft.graph.deviceComplianceScheduledActionForRule",
-    "id": "f0075d5e-5d5e-f007-5e5d-07f05e5d07f0",
-    "ruleName": "Rule Name value"
-  }
+    "@odata.context":  "https://graph.microsoft.com/v1.0/$metadata#deviceManagement/deviceCompliancePolicies(scheduledActionsForRule(scheduledActionConfigurations()))/$entity",
+    "@odata.type": "#microsoft.graph.windows10CompliancePolicy",
+    "id": "{Compliance Policy ID}",
+    "createdDateTime": "Date value",
+    "description": "Description value",
+    "lastModifiedDateTime": "date value",
+    "displayName": "Displayname",
+    "version": 1,
+    "passwordRequired": true,
+    "passwordBlockSimple": false,
+    "passwordRequiredToUnlockFromIdle": false,
+    "passwordMinutesOfInactivityBeforeLock": 5,
+    "passwordExpirationDays": 180,
+    "passwordMinimumLength": 8,
+    "passwordMinimumCharacterSetCount": null,
+    "passwordRequiredType": "deviceDefault",
+    "passwordPreviousPasswordBlockCount": 24,
+    "requireHealthyDeviceReport": false,
+    "osMinimumVersion": null,
+    "osMaximumVersion": null,
+    "mobileOsMinimumVersion": null,
+    "mobileOsMaximumVersion": null,
+    "earlyLaunchAntiMalwareDriverEnabled": false,
+    "bitLockerEnabled": true,
+    "secureBootEnabled": true,
+    "codeIntegrityEnabled": true,
+    "storageRequireEncryption": true,
+    "scheduledActionsForRule@odata.context": "https://graph.microsoft.com/v1.0/$metadata#deviceManagement/deviceCompliancePolicies('{Compliance Policy ID}')/microsoft.graph.windows10CompliancePolicy/scheduledActionsForRule(scheduledActionConfigurations())",
+    "scheduledActionsForRule": [
+        {
+            "id": "{Compliance Policy ID}",
+            "ruleName": null,
+            "scheduledActionConfigurations@odata.context": "https://graph.microsoft.com/v1.0/$metadata#deviceManagement/deviceCompliancePolicies('{Compliance Policy ID}')/microsoft.graph.windows10CompliancePolicy/scheduledActionsForRule('{Compliance Policy ID}')/scheduledActionConfigurations",
+            "scheduledActionConfigurations": [
+                {
+                    "id": "{scheduled action ID}",
+                    "gracePeriodHours": 0,
+                    "actionType": "block",
+                    "notificationTemplateId": "00000000-0000-0000-0000-000000000000",
+                    "notificationMessageCCList": []
+                }
+            ]
+        }
+    ]
 }
 ```
 
